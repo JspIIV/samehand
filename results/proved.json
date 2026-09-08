@@ -1,0 +1,133 @@
+{
+  "proved_at": "2026-09-08T11:36:01.932Z",
+  "judged_on": "genlayer testnet asimov",
+  "history_from": "base-sepolia",
+  "contract": "0xEfF7b5d8F05501C351712C1B30108967bC79950C",
+  "before_block": "45200000",
+  "findings": {
+    "0x0b57877ec84d96b672cd47d8ea4424283fdb9f6c": {
+      "chain": "base-sepolia",
+      "first": "0x80519c53f10d731e4ff83a7d9acd69cf98da6258",
+      "second": "0x0b57877ec84d96b672cd47d8ea4424283fdb9f6c",
+      "before_block": 45200000,
+      "reading": "KIN",
+      "grounds": "DIRECT",
+      "why": "The first address directly funded the second address in three separate transfers across blocks 45081738, 45091098, and 45095496, establishing a clear one-way financial link between them.",
+      "at": "2026-09-08T11:28:53+00:00"
+    },
+    "0x4200000000000000000000000000000000000006": {
+      "chain": "base-sepolia",
+      "first": "0x80519c53f10d731e4ff83a7d9acd69cf98da6258",
+      "second": "0x4200000000000000000000000000000000000006",
+      "before_block": 45200000,
+      "reading": "UNRELATED",
+      "grounds": "NONE",
+      "why": "First address shows no incoming transfers; second address has multiple diverse funders including bridges/exchanges and large varied amounts with no connection to first address.",
+      "at": "2026-09-08T11:30:25+00:00"
+    },
+    "0x000000000000000000000000000000000000beef": {
+      "chain": "base-sepolia",
+      "first": "0x80519c53f10d731e4ff83a7d9acd69cf98da6258",
+      "second": "0x000000000000000000000000000000000000beef",
+      "before_block": 45200000,
+      "reading": "UNCERTAIN",
+      "grounds": "NONE",
+      "why": "neither history could be read",
+      "at": "2026-09-08T11:34:27+00:00"
+    }
+  },
+  "rounds_needed": {
+    "0x0b57877ec84d96b672cd47d8ea4424283fdb9f6c": 1,
+    "0x4200000000000000000000000000000000000006": 1,
+    "0x000000000000000000000000000000000000beef": 2
+  },
+  "size": {
+    "examined": 3,
+    "kin": 1,
+    "note": "every pair asked about is kept, including the ones found unrelated; a register holding only its findings could not be told apart from a net"
+  },
+  "checks": [
+    {
+      "label": "the pair where one funded the other is found",
+      "ok": true
+    },
+    {
+      "label": "and it says the evidence was direct",
+      "ok": true
+    },
+    {
+      "label": "a public contract everybody uses is not kin",
+      "ok": true
+    },
+    {
+      "label": "an address with no history is uncertain, not cleared",
+      "ok": true
+    },
+    {
+      "label": "the boolean follows the finding",
+      "ok": true
+    },
+    {
+      "label": "a pair nobody asked about reads false, like one found unrelated",
+      "ok": true
+    },
+    {
+      "label": "but the detail says nobody asked, which the boolean cannot",
+      "ok": true
+    },
+    {
+      "label": "asking in the other order finds the same answer",
+      "ok": true
+    },
+    {
+      "label": "every pair asked about was kept, not only the finding",
+      "ok": true
+    },
+    {
+      "label": "and each was actually examined rather than quietly skipped",
+      "ok": true
+    }
+  ],
+  "transcript": [
+    "Are these two addresses the same hand?",
+    "",
+    "  judged on   GenLayer testnet Asimov",
+    "  history from base-sepolia, before block 45200000",
+    "",
+    "  contract 0xEfF7b5d8F05501C351712C1B30108967bC79950C",
+    "",
+    "one funded the other, three times",
+    "    (examine: the consensus submission reverted, waiting 8s)",
+    "    (examine, attempt 1 settled in 89s)",
+    "    KIN on DIRECT grounds",
+    "    The first address directly funded the second address in three separate transfers across blocks 45081738, 45091098, and 45095496, establishing a clear one-way financial link between them.",
+    "",
+    "a wallet and a public contract everybody uses",
+    "    (examine, attempt 1 settled in 88s)",
+    "    UNRELATED",
+    "    First address shows no incoming transfers; second address has multiple diverse funders including bridges/exchanges and large varied amounts with no connection to first address.",
+    "",
+    "a wallet and an address with no history",
+    "    (examine, attempt 1 settled in 149s)",
+    "    the round produced no reading; asking again",
+    "    (examine, attempt 2 settled in 87s)",
+    "    UNCERTAIN",
+    "    neither history could be read",
+    "    (it took 2 rounds)",
+    "",
+    "  register: 3 examined, 1 kin",
+    "",
+    "  ok   the pair where one funded the other is found",
+    "  ok   and it says the evidence was direct",
+    "  ok   a public contract everybody uses is not kin",
+    "  ok   an address with no history is uncertain, not cleared",
+    "  ok   the boolean follows the finding",
+    "  ok   a pair nobody asked about reads false, like one found unrelated",
+    "  ok   but the detail says nobody asked, which the boolean cannot",
+    "  ok   asking in the other order finds the same answer",
+    "  ok   every pair asked about was kept, not only the finding",
+    "  ok   and each was actually examined rather than quietly skipped",
+    "",
+    "10 checks. It told them apart, which is the whole difficulty."
+  ]
+}
