@@ -113,6 +113,14 @@ def _whole(value) -> int:
         return -1
 
 
+def _key(chain: str, one: str, two: str) -> str:
+    # The pair is unordered: asking about A and B is asking about B and A,
+    # and a register that answered differently depending on the order would
+    # be two registers wearing one name.
+    first, second = (one, two) if one < two else (two, one)
+    return chain + "|" + first + "|" + second
+
+
 def _field(raw: str, name: str, allowed, fallback: str) -> str:
     try:
         text = str(raw).strip()
@@ -258,14 +266,6 @@ class SameHand(gl.Contract):
     def __init__(self) -> None:
         pass
 
-    @staticmethod
-    def _key(chain: str, one: str, two: str) -> str:
-        # The pair is unordered: asking about A and B is asking about B and A,
-        # and a register that answered differently depending on the order would
-        # be two registers wearing one name.
-        first, second = (one, two) if one < two else (two, one)
-        return chain + "|" + first + "|" + second
-
     @gl.public.write
     def examine(self, first: str, second: str, chain: str, before_block: str) -> str:
         """Ask whether two addresses are one person, as of a block.
@@ -291,7 +291,7 @@ class SameHand(gl.Contract):
             return json.dumps({"ok": False,
                                "error": "give a block to look before, or 0 for all"})
 
-        key = SameHand._key(where, one, two)
+        key = _key(where, one, two)
         if key in self.found:
             return json.dumps({"ok": False, "error": "already examined",
                                "finding": json.loads(self.found[key])})
@@ -415,7 +415,7 @@ class SameHand(gl.Contract):
         where = str(chain).strip().lower()
         if not one or not two:
             return False
-        key = SameHand._key(where, one, two)
+        key = _key(where, one, two)
         if key not in self.found:
             return False
         return json.loads(self.found[key])["reading"] == KIN
@@ -431,7 +431,7 @@ class SameHand(gl.Contract):
         one = _addr(first)
         two = _addr(second)
         where = str(chain).strip().lower()
-        key = SameHand._key(where, one, two)
+        key = _key(where, one, two)
         if key not in self.found:
             return json.dumps({"examined": False,
                                "note": "nobody has asked about this pair"})
